@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PetStore API Console</title>
+<meta name="description" content="Mockup console for the Boomi PetStore Mock API (simulation of the Get Pet and Create Pet Web Services processes).">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="side" id="side">
+    <div class="brand">
+      <div class="logo"><svg viewBox="0 0 24 24" width="20" height="20" fill="#fff"><ellipse cx="6" cy="9" rx="2" ry="2.6"/><ellipse cx="10" cy="5.5" rx="2" ry="2.6"/><ellipse cx="14.5" cy="5.5" rx="2" ry="2.6"/><ellipse cx="18.5" cy="9" rx="2" ry="2.6"/><path d="M12.2 11c-3 0-6.2 4.2-6.2 6.6 0 1.8 1.4 2.6 3 2.6 1.3 0 2.1-.6 3.2-.6s1.9.6 3.2.6c1.6 0 3-.8 3-2.6 0-2.4-3.2-6.6-6.2-6.6z"/></svg></div>
+      <div><b>PetStore API Console</b><small>Swagger Petstore × Boomi</small></div>
+    </div>
+    <nav class="nav" aria-label="Main">
+      <button data-view="console" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m4 17 6-5-6-5M12 19h8"/></svg>API Console</button>
+      <button data-view="shop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l1.5-5h15L21 9M3 9h18v2a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0zM5 13v7h14v-7"/></svg>Pet Shop Demo</button>
+      <button data-view="flow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><path d="M9 6h4a2 2 0 0 1 2 2v7"/></svg>Process Flow</button>
+      <button data-view="reference"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5M8 13h8M8 17h5"/></svg>API Reference</button>
+      <button data-view="history"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></svg>Request History</button>
+    </nav>
+    <h4>Boomi deployment</h4>
+    <div class="health">
+      <div class="hrow"><span>PetStore API - Get Pet</span><span><i class="dot ok"></i>WSS</span></div>
+      <div class="hrow"><span>PetStore API - Create Pet</span><span><i class="dot ok"></i>WSS</span></div>
+      <div class="hrow"><span>Requests this session</span><span id="hReq">0</span></div>
+      <div class="hrow"><span>Error responses</span><span id="hErr">0</span></div>
+    </div>
+    <div class="side-foot">
+      <span>Simulation</span>
+      <button class="icon-btn" id="themeBtn" title="Toggle theme" aria-label="Toggle theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span id="themeLbl">Theme</span></button>
+    </div>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <main class="main">
+    <div class="top">
+      <button class="burger" id="burger" aria-label="Menu"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+      <div><h1 id="title">API Console</h1><div class="sub" id="subtitle">Try the Boomi Web Services endpoints and see which process path runs</div></div>
+      <span class="mode" title="Runs in your browser with the same logic as the Boomi processes">SIMULATION</span>
+    </div>
+
+    <section class="view" id="view-console"><div class="page"><div class="wrap">
+      <div class="seg ep" id="epSeg" role="tablist">
+        <button type="button" data-ep="get" aria-pressed="true"><span class="m get">GET</span>getPetstorePet</button>
+        <button type="button" data-ep="create" aria-pressed="false"><span class="m post">POST</span>createPetstorePet</button>
+      </div>
+      <div class="urlbar"><span class="m" id="urlMethod">GET</span><code id="urlText"></code><button class="btn primary" id="sendBtn">Send</button></div>
+
+      <div class="grid2">
+        <div class="card">
+          <div id="reqGet">
+            <h3>Query parameters</h3>
+            <div class="field"><label for="petId">petId <span class="req">required</span></label>
+              <input id="petId" value="123" autocomplete="off" inputmode="numeric"><small>Must match <code>^[0-9]+$</code> (decision “Valid Pet ID?” on DPP <code>query_petId</code>).</small></div>
+            <div class="chips" id="getPresets"></div>
+          </div>
+          <div id="reqCreate" hidden>
+            <h3>Request body <span class="meta">application/json · profile j.PetStore.Pet</span></h3>
+            <textarea id="body" spellcheck="false" rows="14"></textarea>
+            <div class="row-actions"><div class="chips" id="postPresets"></div><button class="btn sm" id="fmtBtn" type="button">Format JSON</button></div>
+          </div>
+        </div>
+
+        <div class="card resp" id="respCard">
+          <div class="resp-head"><h3>Response</h3><span id="respStatus" class="meta">Send a request to see the response</span></div>
+          <div class="tabs" id="respTabs" role="tablist">
+            <button data-tab="body" aria-selected="true">Body</button><button data-tab="headers">Headers</button><button data-tab="log">Process log</button><button data-tab="curl">cURL</button>
+          </div>
+          <pre class="code" id="respOut">—</pre>
+        </div>
+      </div>
+
+      <h2>Execution path</h2>
+      <div class="card" id="trace"></div>
+    </div></div></section>
+
+    <section class="view" id="view-shop" hidden><div class="page"><div class="wrap" id="shopPage"></div></div></section>
+    <section class="view" id="view-flow" hidden><div class="page"><div class="wrap" id="flowPage"></div></div></section>
+    <section class="view" id="view-reference" hidden><div class="page"><div class="wrap" id="refPage"></div></div></section>
+    <section class="view" id="view-history" hidden><div class="page"><div class="wrap" id="historyPage"></div></div></section>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
