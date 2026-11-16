@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PetStore Mock API</title>
+<meta name="description" content="Solution documentation for the Boomi PetStore Mock API.">
+<style>
+:root{--bg:#F8F6F3;--surface:#FFFFFF;--surface2:#F2EEE9;--ink:#241B13;--muted:#6E6257;--line:#E4DDD4;
+ --navy:#2A1E14;--acc:#D9631E;--acc-ink:#B04A0F;--acc-tint:#FBEADF;--amber:#2D6CB5;--amber-tint:#E4EEFA;--hero:#241B13;--hero-ink:#EBD9C8;--eyebrow:#FFB27A;
+ --shadow:0 1px 2px rgba(36,27,19,.06),0 6px 20px rgba(36,27,19,.06)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#14100C;--surface:#1E1812;--surface2:#29211A;--ink:#F3ECE4;--muted:#B3A595;
+ --line:#3A2F25;--navy:#F6E3D2;--acc:#F07A33;--acc-ink:#FFA463;--acc-tint:#3A2516;--amber:#7FB2F0;--amber-tint:#132E52;--hero:#0F0C09;--shadow:none}}
+:root[data-theme="dark"]{--bg:#14100C;--surface:#1E1812;--surface2:#29211A;--ink:#F3ECE4;--muted:#B3A595;--line:#3A2F25;--navy:#F6E3D2;
+ --acc:#F07A33;--acc-ink:#FFA463;--acc-tint:#3A2516;--amber:#7FB2F0;--amber-tint:#132E52;--hero:#0F0C09;--shadow:none}
+th{background:#2A1E14!important}
+pre.cmd{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow:auto;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;margin:8px 0}
+
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Segoe UI",Calibri,Arial,sans-serif}
+a{color:var(--acc-ink)}code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.88em;background:var(--surface2);padding:1px 5px;border-radius:5px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+header.hero{background:var(--hero);color:#fff;padding:56px 0 44px}
+.hero .eyebrow{color:var(--eyebrow);font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:13px}
+.hero h1{font:700 clamp(32px,5vw,52px)/1.1 Cambria,Georgia,serif;margin:10px 0 12px}
+.hero p{color:var(--hero-ink);max-width:760px;margin:0;font-size:18px}
+.hero .meta{margin-top:18px;color:var(--hero-ink);opacity:.8;font-size:14px}
+nav.toc{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:10px;padding-bottom:10px;align-items:center}
+nav.toc a{white-space:nowrap;text-decoration:none;color:var(--muted);font-size:14px;padding:6px 10px;border-radius:999px}
+nav.toc a:hover{background:var(--surface2);color:var(--ink)}
+nav.toc .spacer{flex:1}
+.tgl{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer;white-space:nowrap;text-decoration:none}
+a.tgl{color:var(--ink)!important}
+section{padding:44px 0 8px;scroll-margin-top:56px}
+h2{font:700 30px/1.2 Cambria,Georgia,serif;color:var(--navy);margin:0 0 14px}
+h3{font-size:18px;margin:0 0 6px;color:var(--ink)}
+.lead{font-size:18px;color:var(--muted);max-width:820px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px}
+.stat{background:var(--acc-tint);border-radius:14px;padding:18px;text-align:center}
+.stat b{display:block;font:700 34px/1.1 Cambria,Georgia,serif;color:var(--acc-ink)}
+.stat span{color:var(--muted);font-size:14px}
+.grid{display:grid;gap:14px}.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow)}
+.card p{margin:0;color:var(--muted)}
+.ihead{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+.ico{width:40px;height:40px;flex:none;padding:9px;border-radius:50%;background:var(--acc);stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.amber .ico{background:var(--amber)}
+figure{margin:18px 0;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px;overflow:auto}
+figure svg{display:block;width:100%;height:auto;min-width:720px;font-family:"Segoe UI",Calibri,Arial,sans-serif}
+figcaption{color:var(--muted);font-size:14px;text-align:center;padding:6px}
+svg .lane rect{fill:var(--surface2);stroke:var(--line)}svg .lt{fill:var(--muted);font-size:13px;font-weight:700;text-anchor:middle;letter-spacing:.04em;text-transform:uppercase}
+svg .bx rect{fill:var(--surface);stroke:var(--line);stroke-width:1.5}svg .bx text{fill:var(--ink);font-size:14px;font-weight:600;text-anchor:middle}
+svg .bx text.sm{fill:var(--muted);font-size:11.5px;font-weight:400}
+svg .bx.hl rect{stroke:var(--acc);stroke-width:2;fill:var(--acc-tint)}svg .bx.amb rect{stroke:var(--amber);stroke-width:2;fill:var(--amber-tint)}
+svg .bx.err rect{stroke:#D0505D;stroke-width:1.5;stroke-dasharray:5 4}
+svg .ln path{fill:none;stroke:var(--acc);stroke-width:2}svg .mk{fill:var(--acc)}
+ul.clean,ol.clean{padding-left:22px;margin:10px 0}ul.clean li,ol.clean li{margin:6px 0}
+.note{background:var(--amber-tint);border-radius:12px;padding:14px 16px;color:var(--ink)}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:15px}
+th{background:var(--navy-th,#141B3C);color:#fff;text-align:left;padding:10px 14px;font-weight:600}
+td{padding:10px 14px;border-top:1px solid var(--line);vertical-align:top}
+tbody tr:nth-child(even) td{background:var(--surface2)}
+.pill{display:inline-block;background:var(--acc-tint);color:var(--acc-ink);font-weight:700;border-radius:999px;padding:2px 10px;font-size:13px}
+.q{font-weight:700;color:var(--navy);margin:0 0 6px!important;font-size:17px}
+.starter{display:flex;gap:16px;align-items:flex-start}.starter p{margin:0 0 6px}
+.snum{flex:none;width:40px;height:40px;border-radius:50%;background:var(--acc);color:#fff;font:700 18px/40px Cambria,Georgia,serif;text-align:center}
+.snum.amber{background:var(--amber)}
+.outcome{color:var(--acc-ink)!important;font-weight:600;margin-top:8px!important}
+.uc h3{font-size:19px;margin-bottom:6px}.uc .meta{font-size:14px;margin:0 0 10px}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:12px}.ba div{border-radius:12px;padding:12px 14px;font-size:15px;color:var(--ink)}
+.ba span{display:block;font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.before{background:var(--surface2)}.before span{color:var(--muted)}.after{background:var(--acc-tint)}.after span{color:var(--acc-ink)}
+a.btn{display:inline-block;background:var(--acc);color:#fff;text-decoration:none;font-weight:600;padding:10px 18px;border-radius:10px}
+footer{padding:40px 0 60px;color:var(--muted);font-size:14px;border-top:1px solid var(--line);margin-top:40px}
+body.present nav.toc{display:none}
+body.present section,body.present header.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+body.present section{border-top:1px solid var(--line)}
+@media (max-width:820px){.stats{grid-template-columns:repeat(2,1fr)}.g2,.g3{grid-template-columns:1fr}.ba{grid-template-columns:1fr}h2{font-size:26px}}
+@media print{nav.toc,.tgl{display:none}section{break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">Solution Documentation &amp; Developer Guide</div>
+  <h1>PetStore Mock API</h1>
+  <p>Swagger Petstore–compatible mock endpoints built with Boomi Web Services</p>
+  <div class="meta">Version 1.0 · November 2026 · For integration engineers and front-end developers</div>
+</div></header>
+<nav class="toc" aria-label="Contents"><div class="wrap"><a href="#summary">Summary</a><a href="#background">Purpose</a><a href="#value">Demonstrates</a><a href="#architecture">Architecture</a><a href="#api">API</a><a href="#design">Process design</a><a href="#testing">Tests</a><a href="#portal">Console</a><a href="#components">Components</a><a href="#operate">Setup</a><a href="#next">Next steps</a><span class="spacer"></span>
+  <a class="tgl" href="id/PetStore-Mock-API-Dokumentasi.html" hreflang="id">Bahasa Indonesia</a>
+  <button class="tgl" id="present" title="One section per screen (F = full screen)">Presentation mode</button>
+  <button class="tgl" id="theme">Theme</button>
+</div></nav>
+<main class="wrap">
+<section id="summary"><h2>Executive summary</h2><p class="lead">PetStore Mock API is a small Boomi Web Services project that mimics two operations of the public Swagger Petstore: <b>get a pet by ID</b> and <b>create a pet</b>. It gives front-end and integration teams a stable endpoint to build against before the real back end exists.</p><p>It is also a clean reference for the layering used in larger projects: a thin listener process, a sub-process with the business logic, a JSON profile for the contract, and Petstore-style error responses.</p><div class="stats"><div class="stat"><b>2</b><span>REST endpoints</span></div><div class="stat"><b>4</b><span>Boomi processes</span></div><div class="stat"><b>1</b><span>JSON profile (Pet)</span></div><div class="stat"><b>2</b><span>validation rules</span></div></div></section><section id="background"><h2>Purpose</h2><div class="grid g3"><div class="card"><div class="ihead"><svg class="ico" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><h3>Unblock client teams</h3></div><p>Front-end and mobile developers get a working Petstore-compatible API on day one.</p></div><div class="card"><div class="ihead"><svg class="ico" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><h3>Contract testing</h3></div><p>Predictable responses — including errors — make it easy to test client error handling.</p></div><div class="card"><div class="ihead"><svg class="ico" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg><h3>Reference pattern</h3></div><p>Shows the API → [SUB] layering, regex decisions and Message-shape responses in their simplest form.</p></div></div></section><section id="value"><h2>What it demonstrates</h2><div class="grid g3"><div class="card"><div class="ihead"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><h3>Web Services Server</h3></div><p>Exposing Boomi processes as REST endpoints on the Atom Cloud shared web server.</p></div><div class="card"><div class="ihead"><svg class="ico" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg><h3>Query parameters as DPPs</h3></div><p>petId arrives as dynamic process property <code>query_petId</code>.</p></div><div class="card"><div class="ihead"><svg class="ico" viewBox="0 0 24 24"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5M8 13h8M8 17h5"/></svg><h3>JSON profile</h3></div><p><code>j.PetStore.Pet</code> follows the Swagger Petstore Pet schema and is used for field access in decisions.</p></div><div class="card"><div class="ihead"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><h3>Input validation</h3></div><p>Regex decisions reject bad IDs and missing names before anything else runs.</p></div><div class="card"><div class="ihead"><svg class="ico" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><h3>Consistent errors</h3></div><p>Errors use the Petstore <code>ApiResponse</code> shape: code, type, message.</p></div><div class="card"><div class="ihead"><svg class="ico" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><h3>Observability</h3></div><p>A Notify shape logs every accepted pet in the process log.</p></div></div></section><section id="architecture"><h2>Solution architecture</h2><figure><svg viewBox="0 0 980 470" role="img" aria-label="Solution architecture">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" class="mk"/></marker></defs>
+<g class="lane"><rect x="10" y="20" width="170" height="430" rx="14"/><text x="95" y="46" class="lt">Clients</text></g>
+<g class="lane"><rect x="196" y="20" width="774" height="430" rx="14"/><text x="583" y="46" class="lt">Boomi Atom Cloud · shared web server</text></g>
+<g class="bx"><rect x="26" y="90" width="138" height="54" rx="10"/><text x="95" y="114">cURL / Postman</text><text x="95" y="132" class="sm">manual tests</text></g>
+<g class="bx"><rect x="26" y="170" width="138" height="54" rx="10"/><text x="95" y="194">Front-end app</text><text x="95" y="212" class="sm">client development</text></g>
+<g class="bx"><rect x="26" y="250" width="138" height="54" rx="10"/><text x="95" y="274">Web console</text><text x="95" y="292" class="sm">GitHub Pages</text></g>
+<g class="bx hl"><rect x="212" y="150" width="150" height="110" rx="10"/><text x="287" y="182">/ws/simple</text><text x="287" y="204" class="sm">Basic auth</text><text x="287" y="224" class="sm">routes by operation</text><text x="287" y="244" class="sm">HTTPS</text></g>
+<g class="bx"><rect x="390" y="76" width="150" height="62" rx="10"/><text x="465" y="102">API - Get Pet</text><text x="465" y="122" class="sm">WSS GET · no input</text></g>
+<g class="bx"><rect x="566" y="76" width="130" height="62" rx="10"/><text x="631" y="102">Decision</text><text x="631" y="122" class="sm">petId ~ ^[0-9]+$</text></g>
+<g class="bx"><rect x="724" y="64" width="230" height="40" rx="10"/><text x="839" y="89" class="sm">true → Message: mock Pet</text></g>
+<g class="bx err"><rect x="724" y="112" width="230" height="40" rx="10"/><text x="839" y="137" class="sm">false → Message: ApiResponse 400</text></g>
+<g class="bx"><rect x="390" y="270" width="150" height="62" rx="10"/><text x="465" y="296">API - Create Pet</text><text x="465" y="316" class="sm">WSS CREATE · JSON</text></g>
+<g class="bx"><rect x="566" y="270" width="130" height="62" rx="10"/><text x="631" y="296">Decision</text><text x="631" y="316" class="sm">name ~ .*\S.*</text></g>
+<g class="bx"><rect x="724" y="258" width="230" height="40" rx="10"/><text x="839" y="283" class="sm">true → Notify “Pet accepted” · echo</text></g>
+<g class="bx err"><rect x="724" y="306" width="230" height="40" rx="10"/><text x="839" y="331" class="sm">false → Message: ApiResponse 405</text></g>
+<g class="bx amb"><rect x="390" y="380" width="564" height="50" rx="10"/><text x="672" y="402">Return Documents → HTTP response (JSON)</text><text x="672" y="420" class="sm">each API process calls its [SUB] process; the sub-process holds the decision and messages</text></g>
+<g class="ln"><path d="M164 117h20v60h28M164 197h48M164 277h20v-40h28" marker-end="url(#ar)"/>
+<path d="M362 180h10v-73h18" marker-end="url(#ar)"/><path d="M362 230h10v71h18" marker-end="url(#ar)"/>
+<path d="M540 107h26" marker-end="url(#ar)"/><path d="M540 301h26" marker-end="url(#ar)"/>
+<path d="M696 100h10v-16h18M696 114h10v18h18" marker-end="url(#ar)"/><path d="M696 294h10v-16h18M696 308h10v18h18" marker-end="url(#ar)"/>
+<path d="M465 332v48" marker-end="url(#ar)"/></g>
+</svg><figcaption>Two Web Services listeners mimic Swagger Petstore. All validation happens in the [SUB] processes, which can be tested on their own.</figcaption></figure></section><section id="api"><h2>API reference</h2><p>Base URL: <code>https://&lt;atom-cloud&gt;/ws/simple</code> · Basic authentication with the Atom Cloud shared web server user.</p><div class="tbl"><table><thead><tr><th>Boomi endpoint</th><th>Swagger Petstore</th><th>Process</th><th>Input → output</th></tr></thead><tbody><tr><td><span class="pill">GET</span> <code>/getPetstorePet?petId=</code></td><td><code>GET /pet/{petId}</code></td><td>PetStore API - Get Pet</td><td>none → single data</td></tr><tr><td><span class="pill">POST</span> <code>/createPetstorePet</code></td><td><code>POST /pet</code></td><td>PetStore API - Create Pet</td><td>single JSON → single data</td></tr></tbody></table></div><h3 style="margin-top:24px">Pet schema (profile j.PetStore.Pet)</h3><div class="tbl"><table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>id</code></td><td>integer (int64)</td><td>Pet ID</td></tr><tr><td><code>category</code></td><td>object {id, name}</td><td>Category</td></tr><tr><td><code>name</code></td><td>string</td><td><b>Required</b> — must contain at least one non-space character</td></tr><tr><td><code>photoUrls</code></td><td>array of string</td><td>Photo URLs</td></tr><tr><td><code>tags</code></td><td>array of {id, name}</td><td>Tags</td></tr><tr><td><code>status</code></td><td>string</td><td>available | pending | sold</td></tr></tbody></table></div><h3 style="margin-top:24px">Responses</h3><div class="tbl"><table><thead><tr><th>Case</th><th>HTTP</th><th>Body</th></tr></thead><tbody><tr><td>GET with a numeric petId</td><td>200</td><td>Mock Pet “doggie” with the requested id</td></tr><tr><td>GET with a missing or non-numeric petId</td><td>200</td><td><code>{"code": 400, "type": "error", "message": "Invalid ID supplied"}</code></td></tr><tr><td>POST with a name</td><td>200</td><td>The request body, echoed back</td></tr><tr><td>POST without a usable name</td><td>200</td><td><code>{"code": 405, "type": "error", "message": "Invalid input: pet name is required"}</code></td></tr></tbody></table></div><div class="note" style="margin-top:16px"><b>Note:</b> the processes do not set an HTTP status, so the listener answers <b>200</b> even for errors. Clients should check <code>type == &quot;error&quot;</code> in the body.</div><h3 style="margin-top:24px">Examples</h3><pre class="cmd">curl -u "$BOOMI_USER:$BOOMI_TOKEN" \
+  "https://&lt;atom-cloud&gt;/ws/simple/getPetstorePet?petId=123"</pre><pre class="cmd">{ "id": 123, "category": {"id": 1, "name": "Dogs"}, "name": "doggie",
+  "photoUrls": ["https://petstore.swagger.io/photos/doggie.jpg"],
+  "tags": [{"id": 1, "name": "friendly"}], "status": "available" }</pre><pre class="cmd">curl -u "$BOOMI_USER:$BOOMI_TOKEN" -X POST -H "Content-Type: application/json" \
+  "https://&lt;atom-cloud&gt;/ws/simple/createPetstorePet" \
+  -d '{"id": 10, "name": "Bobby", "category": {"id": 1, "name": "Dogs"}, "status": "available"}'</pre></section><section id="design"><h2>Process design</h2><div class="tbl"><table><thead><tr><th>Process</th><th>Shapes</th><th>Logic</th></tr></thead><tbody><tr><td>PetStore API - Get Pet</td><td>Start (WSS Listen: PetStore WSS Get Pet) → Process Call → Return Documents</td><td>Receives GET, passes the request to the sub-process.</td></tr><tr><td>[SUB] PetStore Get Pet</td><td>Start (passthrough) → Decision “Valid Pet ID?” → Message → Return Documents</td><td><code>query_petId</code> matches <code>^[0-9]+$</code> → mock Pet with that id; otherwise ApiResponse 400.</td></tr><tr><td>PetStore API - Create Pet</td><td>Start (WSS Listen: PetStore WSS Create Pet) → Process Call → Return Documents</td><td>Receives the JSON body, passes it to the sub-process.</td></tr><tr><td>[SUB] PetStore Create Pet</td><td>Start (passthrough) → Decision “Pet Name Provided?” → Notify / Message → Return Documents</td><td><code>name</code> matches <code>.*\S.*</code> → Notify “Pet accepted: {1}” and echo the body; otherwise ApiResponse 405.</td></tr></tbody></table></div><h3 style="margin-top:24px">Design decisions</h3><ul class="clean"><li><b>Thin listener, testable logic.</b> The [SUB] processes use a passthrough start, so they can be run in Test Mode with a sample document — no HTTP call needed.</li><li><b>Regex decisions</b> keep validation explicit and visible on the canvas.</li><li><b>Message shapes</b> produce the exact Petstore JSON, so clients written for Swagger Petstore work unchanged.</li><li><b>No persistence</b> on purpose: the mock is stateless and safe to call repeatedly.</li></ul></section><section id="testing"><h2>Test cases</h2><div class="tbl"><table><thead><tr><th>#</th><th>Request</th><th>Expected result</th></tr></thead><tbody><tr><td>1</td><td>GET petId=123</td><td>Pet doggie, id 123</td></tr><tr><td>2</td><td>GET petId=abc</td><td>ApiResponse 400</td></tr><tr><td>3</td><td>GET petId=-1</td><td>ApiResponse 400 (minus sign is not a digit)</td></tr><tr><td>4</td><td>GET without petId</td><td>ApiResponse 400</td></tr><tr><td>5</td><td>POST with name “Bobby”</td><td>Body echoed; “Pet accepted” in the process log</td></tr><tr><td>6</td><td>POST without name</td><td>ApiResponse 405</td></tr><tr><td>7</td><td>POST with name of only spaces</td><td>ApiResponse 405</td></tr><tr><td>8</td><td>POST with empty body</td><td>ApiResponse 405</td></tr></tbody></table></div><p style="margin-top:12px">All cases can be run interactively in the web console.</p></section><section id="portal"><h2>Web console mockup</h2><p class="lead">A static console reproduces both endpoints in the browser with the same logic as the Boomi processes.</p><div class="grid g3"><div class="card"><div class="ihead"><svg class="ico" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><h3>API Console</h3></div><p>Build a GET or POST request, use presets for every test case, and read the body, headers, process log and cURL.</p></div><div class="card"><div class="ihead"><svg class="ico" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg><h3>Execution path</h3></div><p>The process diagram highlights the branch each request takes.</p></div><div class="card"><div class="ihead"><svg class="ico" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c.8-3.5 3.6-5.5 7-5.5s6.2 2 7 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/></svg><h3>Pet Shop Demo</h3></div><p>A tiny storefront that adds pets via POST and fetches them via GET.</p></div><div class="card"><div class="ihead"><svg class="ico" viewBox="0 0 24 24"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5M8 13h8M8 17h5"/></svg><h3>API reference</h3></div><p>Endpoints, schema, responses and cURL examples.</p></div><div class="card"><div class="ihead"><svg class="ico" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg><h3>Request history</h3></div><p>Every request in the session; click to replay.</p></div><div class="card"><div class="ihead"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><h3>Runs anywhere</h3></div><p>Plain HTML, CSS and JavaScript on GitHub Pages; light and dark themes.</p></div></div><p style="margin-top:16px"><a class="btn" href="https://diimasogan.github.io/PetStore-MockAPI/portal/">Open the console →</a></p></section><section id="components"><h2>Components</h2><div class="tbl"><table><thead><tr><th>Type</th><th>Component</th><th>Purpose</th></tr></thead><tbody><tr><td>Process (WSS)</td><td>PetStore API - Get Pet</td><td>Listener for GET getPetstorePet</td></tr><tr><td>Process (WSS)</td><td>PetStore API - Create Pet</td><td>Listener for POST createPetstorePet</td></tr><tr><td>Sub-process</td><td>[SUB] PetStore Get Pet</td><td>Validate petId, build the mock Pet</td></tr><tr><td>Sub-process</td><td>[SUB] PetStore Create Pet</td><td>Validate name, log and echo</td></tr><tr><td>Connector operation</td><td>PetStore WSS Get Pet</td><td>Web Services Server · GET · input none · output single data</td></tr><tr><td>Connector operation</td><td>PetStore WSS Create Pet</td><td>Web Services Server · CREATE · input single JSON · output single data</td></tr><tr><td>JSON profile</td><td>j.PetStore.Pet</td><td>Swagger Petstore Pet schema</td></tr></tbody></table></div><h3 style="margin-top:24px">Repository layout</h3><ul class="clean"><li><code>active-development/</code> — Boomi component XML (processes, operations, profile).</li><li><code>portal/</code> — static web console mockup.</li><li><code>docs/</code> — this documentation (source in <code>docs/_source/</code>).</li><li><code>.env.example</code> — the settings needed to push and deploy; copy it to <code>.env</code> (never committed).</li></ul></section><section id="operate"><h2>Setup & deployment</h2><ol class="clean"><li>Copy <code>.env.example</code> to <code>.env</code> and fill in the Boomi account, API token, target folder, environment and test atom.</li><li>Push the components in <code>active-development/</code> to the platform folder.</li><li>Deploy <b>PetStore API - Get Pet</b> and <b>PetStore API - Create Pet</b> to an Atom Cloud environment with the shared web server enabled.</li><li>Call the endpoints with the shared web server user (Basic auth) and run the test cases above.</li></ol></section><section id="next"><h2>Limitations & next steps</h2><div class="grid g3"><div class="card"><div class="ihead"><svg class="ico" viewBox="0 0 24 24"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5M8 13h8M8 17h5"/></svg><h3>Static GET data</h3></div><p>GET always returns “doggie”; created pets are not stored.</p></div><div class="card amber"><div class="ihead"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><h3>HTTP status codes</h3></div><p>Set the HTTP status (400/405) through the response headers so clients don’t need to inspect the body.</p></div><div class="card"><div class="ihead"><svg class="ico" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg><h3>Persistence</h3></div><p>Store pets in a database or Disk V2 and look them up by id.</p></div><div class="card"><div class="ihead"><svg class="ico" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg><h3>More operations</h3></div><p>Add PUT /pet, DELETE /pet/{petId} and findByStatus.</p></div><div class="card"><div class="ihead"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><h3>API Management</h3></div><p>Publish through a Boomi API Service component with an OpenAPI spec.</p></div><div class="card"><div class="ihead"><svg class="ico" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><h3>Schema validation</h3></div><p>Validate status against available | pending | sold and the types of every field.</p></div></div></section>
+</main>
+<footer><div class="wrap">PetStore Mock API · Based on the public Swagger Petstore sample. · <a href="https://github.com/diimasogan/PetStore-MockAPI">GitHub</a> · <a href="https://diimasogan.github.io/PetStore-MockAPI/portal/">Console</a></div></footer>
+<script>
+(function(){var r=document.documentElement,k='doc-theme';
+function set(t){if(t)r.setAttribute('data-theme',t);else r.removeAttribute('data-theme');try{localStorage.setItem(k,t)}catch(e){}}
+try{var t=localStorage.getItem(k);if(t)r.setAttribute('data-theme',t)}catch(e){}
+document.getElementById('theme').onclick=function(){var c=r.getAttribute('data-theme');set(c==='dark'?'light':c==='light'?'':'dark')};
+document.getElementById('present').onclick=function(){document.body.classList.toggle('present')};
+document.addEventListener('keydown',function(e){if(e.key==='f'&&document.body.classList.contains('present')){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()}});
+})();
+</script>
+</body>
+</html>
