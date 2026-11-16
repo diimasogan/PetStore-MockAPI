@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bns:Component xmlns:bns="http://api.platform.boomi.com/"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               componentId="d84dfc3c-71c7-4376-9c30-57cebae89a7a"
+               name="[SUB] PetStore Create Pet"
+               type="process"
+               folderId="Rjo4OTYwNzE5">
+  <bns:encryptedValues/>
+  <bns:description>Business logic for Petstore POST /pet. Validates the incoming Pet (name required) and echoes it back, or returns a Petstore-style ApiResponse error. Testable standalone (passthrough start). | built with boomi-companion v1.0.103</bns:description>
+  <bns:object>
+    <process allowSimultaneous="false" enableUserLog="false" processLogOnErrorOnly="false" purgeDataImmediately="false" stopProcessingIfZeroDocuments="true" updateRunDates="false" workload="general">
+      <shapes>
+        <shape image="start" name="shape1" shapetype="start" userlabel="" x="48.0" y="46.0">
+          <configuration>
+            <passthroughaction/>
+          </configuration>
+          <dragpoints>
+            <dragpoint name="shape1.dragpoint1" toShape="shape2" x="256.0" y="56.0"/>
+          </dragpoints>
+        </shape>
+        <shape image="decision_icon" name="shape2" shapetype="decision" userlabel="Pet Name Provided?" x="272.0" y="48.0">
+          <configuration>
+            <decision comparison="regex" name="Pet Name Provided?">
+              <decisionvalue valueType="profile">
+                <profileelement elementId="8" elementName="name (Root/Object/name)" profileId="d4f544a1-5e18-411b-b2c9-e97a15f18741" profileType="profile.json"/>
+              </decisionvalue>
+              <decisionvalue valueType="static">
+                <staticparameter staticproperty=".*\S.*"/>
+              </decisionvalue>
+            </decision>
+          </configuration>
+          <dragpoints>
+            <dragpoint identifier="true" name="shape2.dragpoint1" text="True" toShape="shape3" x="480.0" y="56.0"/>
+            <dragpoint identifier="false" name="shape2.dragpoint2" text="False" toShape="shape4" x="480.0" y="216.0"/>
+          </dragpoints>
+        </shape>
+        <shape image="notify_icon" name="shape3" shapetype="notify" userlabel="Log Created Pet" x="496.0" y="48.0">
+          <configuration>
+            <notify disableEvent="true" enableUserLog="false" perExecution="false" title="">
+              <notifyMessage>Pet accepted: {1}</notifyMessage>
+              <notifyMessageLevel>INFO</notifyMessageLevel>
+              <notifyParameters>
+                <parametervalue key="0" valueType="current"/>
+              </notifyParameters>
+            </notify>
+          </configuration>
+          <dragpoints>
+            <dragpoint name="shape3.dragpoint1" toShape="shape5" x="704.0" y="56.0"/>
+          </dragpoints>
+        </shape>
+        <shape image="message_icon" name="shape4" shapetype="message" userlabel="Build Invalid Input Error" x="496.0" y="208.0">
+          <configuration>
+            <message combined="false">
+              <msgTxt>'{"code": 405, "type": "error", "message": "Invalid input: pet name is required"}'</msgTxt>
+              <msgParameters/>
+            </message>
+          </configuration>
+          <dragpoints>
+            <dragpoint name="shape4.dragpoint1" toShape="shape5" x="704.0" y="56.0"/>
+          </dragpoints>
+        </shape>
+        <shape image="returndocuments_icon" name="shape5" shapetype="returndocuments" userlabel="Pet Response" x="720.0" y="48.0">
+          <configuration>
+            <returndocuments label="Pet Response"/>
+          </configuration>
+          <dragpoints/>
+        </shape>
+      </shapes>
+    </process>
+  </bns:object>
+  <bns:processOverrides/>
+</bns:Component>

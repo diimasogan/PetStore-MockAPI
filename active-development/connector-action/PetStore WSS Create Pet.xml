@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bns:Component xmlns:bns="http://api.platform.boomi.com/"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               componentId="9ee029af-e7ed-4122-95de-807e2d4fd709"
+               name="PetStore WSS Create Pet"
+               type="connector-action"
+               subType="wss"
+               folderId="Rjo4OTYwNzE5">
+  <bns:encryptedValues/>
+  <bns:description>Mimics Petstore POST /pet. Endpoint: POST /ws/simple/createPetstorePet | built with boomi-companion v1.0.103</bns:description>
+  <bns:object>
+    <Operation>
+      <Archiving directory="" enabled="false"/>
+      <Configuration>
+        <WebServicesServerListenAction
+          inputType="singlejson"
+          objectName="petstorePet"
+          operationType="CREATE"
+          outputType="singledata"
+          requestProfile="d4f544a1-5e18-411b-b2c9-e97a15f18741"
+          responseContentType="application/json"/>
+      </Configuration>
+      <Tracking>
+        <TrackedFields/>
+      </Tracking>
+      <Caching/>
+    </Operation>
+  </bns:object>
+</bns:Component>

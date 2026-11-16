@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bns:Component xmlns:bns="http://api.platform.boomi.com/"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               componentId="23cccc55-4269-463a-b55d-77561e18cae8"
+               name="[SUB] PetStore Get Pet"
+               type="process"
+               folderId="Rjo4OTYwNzE5">
+  <bns:encryptedValues/>
+  <bns:description>Business logic for Petstore GET /pet/{petId}. Reads the petId query parameter (DPP query_petId), returns a mock Pet with that id, or a Petstore-style ApiResponse error for an invalid id. | built with boomi-companion v1.0.103</bns:description>
+  <bns:object>
+    <process allowSimultaneous="false" enableUserLog="false" processLogOnErrorOnly="false" purgeDataImmediately="false" stopProcessingIfZeroDocuments="true" updateRunDates="false" workload="general">
+      <shapes>
+        <shape image="start" name="shape1" shapetype="start" userlabel="" x="48.0" y="46.0">
+          <configuration>
+            <passthroughaction/>
+          </configuration>
+          <dragpoints>
+            <dragpoint name="shape1.dragpoint1" toShape="shape2" x="256.0" y="56.0"/>
+          </dragpoints>
+        </shape>
+        <shape image="decision_icon" name="shape2" shapetype="decision" userlabel="Valid Pet ID?" x="272.0" y="48.0">
+          <configuration>
+            <decision comparison="regex" name="Valid Pet ID?">
+              <decisionvalue valueType="process">
+                <processparameter processproperty="query_petId" processpropertydefaultvalue=""/>
+              </decisionvalue>
+              <decisionvalue valueType="static">
+                <staticparameter staticproperty="^[0-9]+$"/>
+              </decisionvalue>
+            </decision>
+          </configuration>
+          <dragpoints>
+            <dragpoint identifier="true" name="shape2.dragpoint1" text="True" toShape="shape3" x="480.0" y="56.0"/>
+            <dragpoint identifier="false" name="shape2.dragpoint2" text="False" toShape="shape4" x="480.0" y="216.0"/>
+          </dragpoints>
+        </shape>
+        <shape image="message_icon" name="shape3" shapetype="message" userlabel="Build Mock Pet" x="496.0" y="48.0">
+          <configuration>
+            <message combined="false">
+              <msgTxt>'{
+  "id": '{1}',
+  "category": {"id": 1, "name": "Dogs"},
+  "name": "doggie",
+  "photoUrls": ["https://petstore.swagger.io/photos/doggie.jpg"],
+  "tags": [{"id": 1, "name": "friendly"}],
+  "status": "available"
+}'</msgTxt>
+              <msgParameters>
+                <parametervalue key="0" valueType="process">
+                  <processparameter processproperty="query_petId" processpropertydefaultvalue=""/>
+                </parametervalue>
+              </msgParameters>
+            </message>
+          </configuration>
+          <dragpoints>
+            <dragpoint name="shape3.dragpoint1" toShape="shape5" x="704.0" y="56.0"/>
+          </dragpoints>
+        </shape>
+        <shape image="message_icon" name="shape4" shapetype="message" userlabel="Build Invalid ID Error" x="496.0" y="208.0">
+          <configuration>
+            <message combined="false">
+              <msgTxt>'{"code": 400, "type": "error", "message": "Invalid ID supplied"}'</msgTxt>
+              <msgParameters/>
+            </message>
+          </configuration>
+          <dragpoints>
+            <dragpoint name="shape4.dragpoint1" toShape="shape5" x="704.0" y="56.0"/>
+          </dragpoints>
+        </shape>
+        <shape image="returndocuments_icon" name="shape5" shapetype="returndocuments" userlabel="Pet Response" x="720.0" y="48.0">
+          <configuration>
+            <returndocuments label="Pet Response"/>
+          </configuration>
+          <dragpoints/>
+        </shape>
+      </shapes>
+    </process>
+  </bns:object>
+  <bns:processOverrides/>
+</bns:Component>

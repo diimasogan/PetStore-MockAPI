@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bns:Component xmlns:bns="http://api.platform.boomi.com/"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               componentId="8b82e4d7-dcc1-4ecc-9e40-393826f78809"
+               name="PetStore WSS Get Pet"
+               type="connector-action"
+               subType="wss"
+               folderId="Rjo4OTYwNzE5">
+  <bns:encryptedValues/>
+  <bns:description>Mimics Petstore GET /pet/{petId}. Endpoint: GET /ws/simple/getPetstorePet?petId=123 | built with boomi-companion v1.0.103</bns:description>
+  <bns:object>
+    <Operation>
+      <Archiving directory="" enabled="false"/>
+      <Configuration>
+        <WebServicesServerListenAction
+          inputType="none"
+          objectName="petstorePet"
+          operationType="GET"
+          outputType="singledata"
+          responseContentType="application/json"/>
+      </Configuration>
+      <Tracking>
+        <TrackedFields/>
+      </Tracking>
+      <Caching/>
+    </Operation>
+  </bns:object>
+</bns:Component>

@@ -1,0 +1,24 @@
+# secrets & local env
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+.mcp.json
+
+# python / runtime
+.venv/
+__pycache__/
+*.pyc
+logs/
+*.log
+*.swp
+
+# boomi local sync artifacts
+active-development/.sync-state/
+active-development/inventories/
+active-development/feedback/
+active-development/extension-snapshots/
+active-development/connector-settings/
+agent/agentgarden_state.json

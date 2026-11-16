@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bns:Component xmlns:bns="http://api.platform.boomi.com/"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               componentId="d4f544a1-5e18-411b-b2c9-e97a15f18741"
+               name="j.PetStore.Pet"
+               type="profile.json"
+               folderId="Rjo4OTYwNzE5">
+  <bns:encryptedValues/>
+  <bns:description>Swagger Petstore Pet schema (https://petstore.swagger.io/). Used as the request profile for Create Pet and for field access in decisions. | built with boomi-companion v1.0.103</bns:description>
+  <bns:object>
+    <JSONProfile strict="false">
+      <DataElements>
+        <JSONRootValue dataType="character" isMappable="true" isNode="true" key="1" name="Root">
+          <DataFormat><ProfileCharacterFormat/></DataFormat>
+          <JSONObject isMappable="false" isNode="true" key="2" name="Object">
+            <JSONObjectEntry dataType="number" isMappable="true" isNode="true" key="3" name="id">
+              <DataFormat><ProfileNumberFormat numberFormat=""/></DataFormat>
+            </JSONObjectEntry>
+            <JSONObjectEntry dataType="character" isMappable="false" isNode="true" key="4" name="category">
+              <DataFormat><ProfileCharacterFormat/></DataFormat>
+              <JSONObject isMappable="false" isNode="true" key="5" name="Object">
+                <JSONObjectEntry dataType="number" isMappable="true" isNode="true" key="6" name="id">
+                  <DataFormat><ProfileNumberFormat numberFormat=""/></DataFormat>
+                </JSONObjectEntry>
+                <JSONObjectEntry dataType="character" isMappable="true" isNode="true" key="7" name="name">
+                  <DataFormat><ProfileCharacterFormat/></DataFormat>
+                </JSONObjectEntry>
+              </JSONObject>
+            </JSONObjectEntry>
+            <JSONObjectEntry dataType="character" isMappable="true" isNode="true" key="8" name="name">
+              <DataFormat><ProfileCharacterFormat/></DataFormat>
+            </JSONObjectEntry>
+            <JSONObjectEntry dataType="character" isMappable="false" isNode="true" key="9" name="photoUrls">
+              <DataFormat><ProfileCharacterFormat/></DataFormat>
+              <JSONArray elementType="repeating" isMappable="false" isNode="true" key="10" name="photoUrls">
+                <JSONArrayElement dataType="character" isMappable="true" isNode="true" key="11" maxOccurs="-1" minOccurs="0" name="ArrayElement1">
+                  <DataFormat><ProfileCharacterFormat/></DataFormat>
+                </JSONArrayElement>
+              </JSONArray>
+            </JSONObjectEntry>
+            <JSONObjectEntry dataType="character" isMappable="false" isNode="true" key="12" name="tags">
+              <DataFormat><ProfileCharacterFormat/></DataFormat>
+              <JSONArray elementType="repeating" isMappable="false" isNode="true" key="13" name="tags">
+                <JSONArrayElement dataType="character" isMappable="false" isNode="true" key="14" maxOccurs="-1" minOccurs="0" name="ArrayElement1">
+                  <JSONObject isMappable="false" isNode="true" key="15" name="Object">
+                    <JSONObjectEntry dataType="number" isMappable="true" isNode="true" key="16" name="id">
+                      <DataFormat><ProfileNumberFormat numberFormat=""/></DataFormat>
+                    </JSONObjectEntry>
+                    <JSONObjectEntry dataType="character" isMappable="true" isNode="true" key="17" name="name">
+                      <DataFormat><ProfileCharacterFormat/></DataFormat>
+                    </JSONObjectEntry>
+                  </JSONObject>
+                </JSONArrayElement>
+              </JSONArray>
+            </JSONObjectEntry>
+            <JSONObjectEntry dataType="character" isMappable="true" isNode="true" key="18" name="status">
+              <DataFormat><ProfileCharacterFormat/></DataFormat>
+            </JSONObjectEntry>
+          </JSONObject>
+          <Qualifiers><QualifierList/></Qualifiers>
+        </JSONRootValue>
+      </DataElements>
+      <tagLists/>
+    </JSONProfile>
+  </bns:object>
+</bns:Component>

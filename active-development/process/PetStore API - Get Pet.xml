@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bns:Component xmlns:bns="http://api.platform.boomi.com/"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               componentId="27f9f79e-5cae-4cd2-8702-37ac79f75808"
+               name="PetStore API - Get Pet"
+               type="process"
+               folderId="Rjo4OTYwNzE5">
+  <bns:encryptedValues/>
+  <bns:description>WSS listener mimicking Petstore GET /pet/{petId}. Endpoint: GET /ws/simple/getPetstorePet?petId=123 | built with boomi-companion v1.0.103</bns:description>
+  <bns:object>
+    <process allowSimultaneous="true" enableUserLog="false" processLogOnErrorOnly="false" purgeDataImmediately="false" stopProcessingIfZeroDocuments="true" updateRunDates="false" workload="general">
+      <shapes>
+        <shape image="start" name="shape1" shapetype="start" userlabel="" x="48.0" y="46.0">
+          <configuration>
+            <connectoraction actionType="Listen" allowDynamicCredentials="NONE" connectorType="wss" hideSettings="true" operationId="8b82e4d7-dcc1-4ecc-9e40-393826f78809">
+              <parameters/>
+              <dynamicProperties/>
+            </connectoraction>
+          </configuration>
+          <dragpoints>
+            <dragpoint name="shape1.dragpoint1" toShape="shape2" x="256.0" y="56.0"/>
+          </dragpoints>
+        </shape>
+        <shape image="processcall_icon" name="shape2" shapetype="processcall" userlabel="Get Pet Logic" x="272.0" y="48.0">
+          <configuration>
+            <processcall abort="true" processId="23cccc55-4269-463a-b55d-77561e18cae8" wait="true">
+              <parameters/>
+              <returnpaths>
+                <returnpaths childShapeName="shape5"/>
+              </returnpaths>
+            </processcall>
+          </configuration>
+          <dragpoints>
+            <dragpoint identifier="shape5" name="shape2.dragpoint1" text="Pet Response" toShape="shape3" x="480.0" y="56.0"/>
+          </dragpoints>
+        </shape>
+        <shape image="returndocuments_icon" name="shape3" shapetype="returndocuments" userlabel="HTTP Response" x="496.0" y="48.0">
+          <configuration>
+            <returndocuments label="HTTP Response"/>
+          </configuration>
+          <dragpoints/>
+        </shape>
+      </shapes>
+    </process>
+  </bns:object>
+  <bns:processOverrides/>
+</bns:Component>
